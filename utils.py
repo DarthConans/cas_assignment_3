@@ -37,6 +37,15 @@ def translate_sequence_to_numbers(to_translate):
     return set([translate_string_to_numbers(trans) for trans in to_translate])
 
 
+def load_sequence(TRANSLATE_FLAG=False):
+    with open("data/spike_protein_base_pairs.txt", "r") as f:
+        untranslated = f.read().replace(" ", "").replace("\n", "").strip().upper()[330*3:523*3].replace("T", "U")
+    if TRANSLATE_FLAG:
+        return tranlate_aas_to_base_pairs(untranslated)
+    else:
+        return untranslated
+
+
 EQUIVALENT_SEQUENCES = [
     ({"GUU", "GUC", "GUA", "GUG"}, "V"),
     ({"GCU", "GCC", "GCA", "GCG"}, "A"),
@@ -61,6 +70,7 @@ EQUIVALENT_SEQUENCES = [
     ({"AAA", "AAG"}, "K"),
 ]
 
+
 def tranlate_aas_to_base_pairs(aas, translation_list=None):
     if translation_list is None:
         translation_list = EQUIVALENT_SEQUENCES
@@ -75,6 +85,7 @@ def tranlate_aas_to_base_pairs(aas, translation_list=None):
             raise ValueError(f"AMINO ACID {aa} DIDN'T MATCH")
     return "".join(ret)
 
+
 def translate_base_pairs_to_aas(base_pairs_to_translate, translation_list=None):
     if translation_list is None:
         translation_list = EQUIVALENT_SEQUENCES
@@ -83,12 +94,13 @@ def translate_base_pairs_to_aas(base_pairs_to_translate, translation_list=None):
             return aa
     raise ValueError(f"INVALID BASE PAIR SEQUENCE {base_pairs_to_translate} DIDN'T MATCH")
 
+
 def translate_codon_sequence_to_aas(codon_sequence_to_translate, translation_list=None):
     if translation_list is None:
         translation_list = EQUIVALENT_SEQUENCES
     ret = []
     codon_string = str(codon_sequence_to_translate)
     for i in range(0, len(codon_string), 3):
-        local_codon = codon_string[i:i+3]
+        local_codon = codon_string[i:i + 3]
         ret.append(translate_base_pairs_to_aas(local_codon, translation_list))
     return "".join(ret)

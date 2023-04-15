@@ -25,7 +25,7 @@ class bloom_antigenic_calculator():
         else:
             to_calculate_with = set(cls.__binding__.sites).intersection(set(sorted_sites))
             if to_calculate_with:
-                antigenic_difference = 1 - cls.__binding__.binding_retained(sorted_sites)
+                antigenic_difference = 1 - cls.__binding__.binding_retained(to_calculate_with)
             else:
                 antigenic_difference = 0
             cls.__sites_and_fitnesses__[tuple(sorted_sites)] = antigenic_difference
@@ -35,7 +35,7 @@ class bloom_antigenic_calculator():
 
     @classmethod
     def calculate_fitness_of_sequence(cls, sequence, offset=301):
-        sites = sequence.get_mutated_site_indexes()
+        sites = sequence.get_mutated_site_indexes(offset)
         return cls.calculate_fitness(sites)
 
     @classmethod
