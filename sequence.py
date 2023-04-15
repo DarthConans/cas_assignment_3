@@ -104,6 +104,7 @@ class Sequence:
         ret = []
         for i in range(num_to_generate):
             ret.append(self.__mutate_sequence__(num_mutations, force_mutations))
+        return ret
 
     def generate_mutations(self, num_to_generate=100, num_mutations=1, unique=True, force_mutations=True):
         if unique:
@@ -148,4 +149,5 @@ if __name__ == '__main__':
     t5 = neut.get_bloom_antigenic_fitness()
     t6 = t4.get_bloom_antigenic_fitness_non_neutral()
     t7 = neut.get_bloom_antigenic_fitness_non_neutral()
+    t8 = orig_seq.generate_mutations(3, 1, False, False)
     print("whatever")
