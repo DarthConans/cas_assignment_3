@@ -30,11 +30,18 @@ class Sequence:
                     "new_amino": new_amino
                 })
         self.__bloom_antigenic_fitness__ = None
+        self.__bloom_antigenic_fitness_non_neutral__ = None
 
     def get_bloom_antigenic_fitness(self):
         if self.__bloom_antigenic_fitness__ is None:
             self.__bloom_antigenic_fitness__ = bloom_antigenic_calculator.calculate_fitness_of_sequence(self)
         return self.__bloom_antigenic_fitness__
+
+    def get_bloom_antigenic_fitness_non_neutral(self):
+        if self.__bloom_antigenic_fitness_non_neutral__ is None:
+            self.__bloom_antigenic_fitness_non_neutral__ = \
+                bloom_antigenic_calculator.calculate_fitness_of_only_different_proteins(self)
+        return self.__bloom_antigenic_fitness_non_neutral__
 
     def get_non_neutral(self):
         return self.__non_neutral_mutations__
@@ -132,10 +139,13 @@ class Sequence:
 if __name__ == '__main__':
     orig_seq = Sequence("AAAAAA", "AAAAAA", translate_codon_sequence_to_aas("AAAAAA"))
     t = {orig_seq}
-    t2 = orig_seq.generate_mutations(3, 2, True, True)
+    t2 = list(orig_seq.generate_mutations(3, 1, True, True))
     for seq in t2:
         print(seq)
     t3 = orig_seq.probabilistic_combine("GGGGGG", .5)
     t4 = orig_seq.force_combine("CCCCCC", 6)
-    t5 = t4.get_bloom_antigenic_fitness()
+    neut = Sequence("AAGAAG", "AAAAAA", translate_codon_sequence_to_aas("AAAAAA"))
+    t5 = neut.get_bloom_antigenic_fitness()
+    t6 = t4.get_bloom_antigenic_fitness_non_neutral()
+    t7 = neut.get_bloom_antigenic_fitness_non_neutral()
     print("whatever")
