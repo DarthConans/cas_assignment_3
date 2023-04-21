@@ -8,10 +8,12 @@ from fitness_calculators import bloom_fitness
 class Sequence:
     __offset__ = 331
 
-    def __init__(self, sequence, base_sequence, original_amino_acids=None):
+    def __init__(self, sequence, base_sequence=None, original_amino_acids=None):
         self.__sequence__ = sequence
         self.__mutated_codons__ = set()
         self.__mutated_site_indexes__ = set()
+        if base_sequence is None:
+            base_sequence = sequence
         for i in range(len(base_sequence)):
             new_seq_char = sequence[i]
             base_seq_char = base_sequence[i]

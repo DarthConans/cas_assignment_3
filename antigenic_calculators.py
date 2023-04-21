@@ -15,7 +15,7 @@ class bloom_antigenic_calculator():
 
     def __init__(self) -> None:
         super().__init__()
-
+    __iterations__ = 0
     @classmethod
     def calculate_fitness(cls, sites, offset=331):
         sorted_sites = [site + offset for site in sites]
@@ -29,14 +29,16 @@ class bloom_antigenic_calculator():
             else:
                 antigenic_difference = 0
             cls.__sites_and_fitnesses__[tuple(sorted_sites)] = antigenic_difference
-            with open("caches/bloom.pkl", "wb") as f:
-                pkl.dump(cls.__sites_and_fitnesses__, f)
+            cls.__iterations__ += 1
+            if cls.__iterations__ % 1000 == 0:
+                with open("caches/bloom.pkl", "wb") as f:
+                    pkl.dump(cls.__sites_and_fitnesses__, f)
             return antigenic_difference
 
     @classmethod
     def calculate_fitness_of_sequence(cls, sequence, offset=301):
-        sites = sequence.get_mutated_site_indexes(offset)
-        return cls.calculate_fitness(sites)
+        sites = sequence.get_mutated_site_indexes()
+        return cls.calculate_fitness(sites, offset)
 
     @classmethod
     def calculate_fitness_of_only_different_proteins(cls, sequence, offset=331):
