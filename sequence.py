@@ -1,6 +1,7 @@
 import random
 import hashlib
-from utils import AMINO_CHARS_LETTERS, translate_codon_sequence_to_aas
+import pickle as pkl
+from utils import AMINO_CHARS_LETTERS, translate_codon_sequence_to_aas, translate_numbers_to_string, load_sequence
 from antigenic_calculators import bloom_antigenic_calculator
 from fitness_calculators import bloom_fitness
 
@@ -37,7 +38,7 @@ class Sequence:
                     "old_amino": old_amino,
                     "new_amino": new_amino
                 })
-            elif sequence[i*3:(i*3)+3] != base_sequence[i*3:(i*3)+3]:
+            elif sequence[i * 3:(i * 3) + 3] != base_sequence[i * 3:(i * 3) + 3]:
                 self.__neutral_mutations__.append({
                     "site": i,
                     "amino": new_amino
@@ -48,7 +49,8 @@ class Sequence:
 
     def get_bloom_antigenic_fitness(self):
         if self.__bloom_antigenic_fitness__ is None:
-            self.__bloom_antigenic_fitness__ = bloom_antigenic_calculator.calculate_fitness_of_sequence(self, offset=self.__offset__)
+            self.__bloom_antigenic_fitness__ = bloom_antigenic_calculator.calculate_fitness_of_sequence(self,
+                                                                                                        offset=self.__offset__)
         return self.__bloom_antigenic_fitness__
 
     def get_bloom_antigenic_fitness_non_neutral(self):
@@ -165,7 +167,26 @@ class Sequence:
         return Sequence(''.join(new_chars), self.__base_sequence__, self.__original_amino_acids__)
 
 
+def load_old_pickle(file_name, original_sequence=load_sequence()):
+    with open(file_name, "rb") as f:
+        numbers = pkl.load(f)
+    translated_strings = [translate_numbers_to_string(number) for number in numbers]
+    sequences = [Sequence(translated_string, original_sequence) for translated_string in translated_strings]
+    return sequences
+
+
+def get_one_hop():
+    return load_old_pickle("data/loop_neuts_hop_1.pkl")
+
+
+def get_antigenic_one_hop():
+    return load_old_pickle("data/one_hop_anitgenically_neutral.pkl")
+
+
 if __name__ == '__main__':
+
+    neuts = get_one_hop()
+    antigen_neuts = get_antigenic_one_hop()
     orig_seq = Sequence("AAAAAA", "AAAAAA")
     t = {orig_seq}
     t2 = list(orig_seq.generate_mutations(3, 1, True, True))

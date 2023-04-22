@@ -94,6 +94,12 @@ def translate_base_pairs_to_aas(base_pairs_to_translate, translation_list=None):
             return aa
     raise ValueError(f"INVALID BASE PAIR SEQUENCE {base_pairs_to_translate} DIDN'T MATCH")
 
+def translate_numbers_to_string(to_translate):
+    ret = ""
+    for char in str(to_translate):
+        ret += number_to_char(char)
+    return ret
+
 
 def translate_codon_sequence_to_aas(codon_sequence_to_translate, translation_list=None):
     if translation_list is None:
@@ -104,3 +110,4 @@ def translate_codon_sequence_to_aas(codon_sequence_to_translate, translation_lis
         local_codon = codon_string[i:i + 3]
         ret.append(translate_base_pairs_to_aas(local_codon, translation_list))
     return "".join(ret)
+

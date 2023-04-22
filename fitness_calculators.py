@@ -3,11 +3,14 @@ import pandas as pd
 from os.path import exists
 import pickle as pkl
 
+
 def load_fitness_frame():
     frame = pd.read_csv("data/aamut_fitness_all.csv")
     frame = frame[frame["gene"] == "S"]
     frame = frame[["gene", "clade_founder_aa", "mutant_aa", "aa_site", "delta_fitness"]]
     return frame
+
+
 class bloom_fitness:
     __fitness_frame__ = load_fitness_frame()
     __cache_path__ = "caches/bloom_fitness.pkl"
@@ -27,8 +30,8 @@ class bloom_fitness:
             original_amino_acid = mutation_datum[1]
             new_amino_acid = mutation_datum[2]
             fitness_row = cls.__fitness_frame__[(cls.__fitness_frame__["aa_site"] == site) & (
-                        cls.__fitness_frame__["clade_founder_aa"] == original_amino_acid) & (
-                                                            cls.__fitness_frame__["mutant_aa"] == new_amino_acid)]
+                    cls.__fitness_frame__["clade_founder_aa"] == original_amino_acid) & (
+                                                        cls.__fitness_frame__["mutant_aa"] == new_amino_acid)]
             if not fitness_row.empty:
                 total_change += fitness_row["delta_fitness"].iloc[0]
             else:
@@ -76,3 +79,6 @@ class bloom_fitness:
             total_change += fitness
         return total_change
 
+if __name__ == '__main__':
+    frame = load_fitness_frame()
+    print("krewl")
