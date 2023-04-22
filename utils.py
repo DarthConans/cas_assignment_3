@@ -37,8 +37,8 @@ def translate_sequence_to_numbers(to_translate):
     return set([translate_string_to_numbers(trans) for trans in to_translate])
 
 
-def load_sequence(TRANSLATE_FLAG=False):
-    with open("data/spike_protein_base_pairs.txt", "r") as f:
+def load_sequence(TRANSLATE_FLAG=False, file_name="data/spike_protein_base_pairs.txt"):
+    with open(file_name, "r") as f:
         untranslated = f.read().replace(" ", "").replace("\n", "").strip().upper()[330*3:523*3].replace("T", "U")
     if TRANSLATE_FLAG:
         return tranlate_aas_to_base_pairs(untranslated)

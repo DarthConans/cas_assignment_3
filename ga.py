@@ -11,7 +11,7 @@ class Genetic_Algorithm:
     ]
 
     def __init__(self, out_file, initial_sequences, number_of_generations=100, top_to_preserve=100, number_of_children=100,
-                 number_of_mutations=3, antigen_weight=.5, fitness_weight=.5, force_mutations=True, unique=True,
+                 number_of_mutations=3, antigen_weight=.5, fitness_weight=None, force_mutations=True, unique=True,
                  interbreed_random_prob=None, interbreed_specific_sequence_prob=None, interbreed_specific_sequence=None,
                  preserve_lowest_strategy=None, interbreed_top_prob=None, strains_to_check_for=None):
         self.initial_sequences = initial_sequences

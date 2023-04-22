@@ -4,6 +4,7 @@ import pickle as pkl
 from utils import AMINO_CHARS_LETTERS, translate_codon_sequence_to_aas, translate_numbers_to_string, load_sequence
 from antigenic_calculators import bloom_antigenic_calculator
 from fitness_calculators import bloom_fitness
+import pandas as pd
 
 
 class Sequence:
@@ -182,9 +183,15 @@ def get_one_hop():
 def get_antigenic_one_hop():
     return load_old_pickle("data/one_hop_anitgenically_neutral.pkl")
 
+def get_fitness_set(original_sequence=load_sequence()):
+    fitness_set_frame = pd.read_csv("data/fitness_change_of_antigenically_non_neutral_2_hop.csv", index_col=False)
+    sequences = list(fitness_set_frame["new sequence"])
+    translated_sequences = [Sequence(sequence, original_sequence) for sequence in sequences]
+    return translated_sequences
+
 
 if __name__ == '__main__':
-
+    fitness_set = get_fitness_set()
     neuts = get_one_hop()
     antigen_neuts = get_antigenic_one_hop()
     orig_seq = Sequence("AAAAAA", "AAAAAA")
