@@ -45,6 +45,32 @@ def load_sequence(TRANSLATE_FLAG=False, file_name="data/spike_protein_base_pairs
     else:
         return untranslated
 
+def generate_known_strains():
+    rbd = load_sequence()
+    # N501Y
+    alpha = replace_site_codon(rbd, ["N501Y"])
+    # K417N E484K N501Y
+    beta = replace_site_codon(rbd, ["K417N", "E484K", "N501Y"])
+    # L452R T478K
+    delta = replace_site_codon(rbd, ["L452R", "T478K"])
+    # G339D S371L S373P S375F K417N N440K G446S S477N T478K E484A Q493R G496S Q498R N501Y Y505H
+    # from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9376347/
+    omicron = replace_site_codon(rbd, ["G339D", "S371L", "S373P", "S375F", "K417N",
+                                       "N440K", "G446S", "S477N", "T478K", "E484A",
+                                       "Q493R", "G496S", "Q498R", "N501Y", "Y505H"])
+
+    return [alpha, beta, delta, omicron]
+
+def replace_site_codon(sequence, mutations):
+    offset = 331
+    new_sequence = sequence[0:]
+    for i in range(0, len(mutations)):
+        site = int(mutations[i][1:-1])
+        mutation = mutations[i][-1]
+        new_sequence = (new_sequence[0:3*(site-offset)]
+                        +tranlate_aas_to_base_pairs([mutation])
+                        +new_sequence[3*(site-offset+1):])
+    return new_sequence
 
 EQUIVALENT_SEQUENCES = [
     ({"GUU", "GUC", "GUA", "GUG"}, "V"),
