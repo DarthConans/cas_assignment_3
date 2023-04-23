@@ -108,7 +108,7 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
             child = to_breed_with.force_combine(random_sequence, number_of_mutations)
             candidates.append(child)
     if interbreed_specific_prob:
-        should_breed = random.random() < interbreed_random_prob
+        should_breed = random.random() < interbreed_specific_prob
         if should_breed:
             to_breed_with = candidates[0]
             child = to_breed_with.force_combine(interbreed_specific_sequence, number_of_mutations)
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     original_sequence = Sequence(original_aas)
     specific_sequence = Sequence("AAUAUUACAAACUUGUGCCCUUUUGGUGAAGUUUUUAACGCCACCAGAUUUGCAUCUGUUUAUGCUUGGAACAGGAAGAGAAUCAGCAACUGUGUUGCUGAUUAUUCUGUCCUAUAUAAUUCCGCAUCAUUUUCCACUUUUAAGUGUUAUGGAGUGUCUCCUACUAAAUUAAAUGAUCUCUGCUUUACUAAUGUCUAUGCAGAUUCAUUUGUAAUUAGAGGUGAUGAAGUCAGACAAAUCGCUCCAGGCCAAACUGGAAAGAUUGCUGAUUAUAAUUAUAAAUUACCAGAUGAUUUUACAGGCUGCGUUAUAGCUUGGAAUUCUAACAAUCUUGAUUCUAAGGUUGGUGGUAAUUAUAAUUACCUGUAUAGAUUGUUUAGGAAGUCUAAUCUCAAACCUUUUGAGAGAGAUAUUUCAACUGAAAUCUAUCAGGCCGGUAGCACACCUUGUAAUGGUGUUCAAGGUUUUAAUUGUUACUUUCCCUUACAAUCAUAUGGUUUCCAACCCACUAAUGGUGUUGGUUACCAACCAUACAGAGUAGUAGUACUUUCUUUUGAACUUCUACAUGCACCAGCAACU")
     genetic_algorithm = Genetic_Algorithm("test", neutral, number_of_generations=3, number_of_children=3,
-                                          interbreed_random_prob=.7, interbreed_specific_sequence_prob=.7,
+                                          interbreed_specific_sequence_prob=.7,
                                           fitness_weight=None, interbreed_specific_sequence=specific_sequence,
                                           interbreed_top_prob=.7, preserve_lowest_strategy="lowest",
                                           strains_to_check_for=[original_sequence])
