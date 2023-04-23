@@ -37,6 +37,7 @@ class Genetic_Algorithm:
         self.interbreed_top_prob = interbreed_top_prob
         self.strains_to_check_for = None if strains_to_check_for is None else {strain_to_check_for: [] for strain_to_check_for in strains_to_check_for}
         self.out_file = out_file
+        self.top_strains = []
 
 
     @classmethod
@@ -68,6 +69,7 @@ class Genetic_Algorithm:
             self.fitnesses.append(self.generate_fitness_tuple(generation[0]))
             for strain_found in strains_found_in_generation:
                 self.strains_to_check_for[strain_found].append(i)
+            self.top_strains.append(generation[0])
         print(
             f"AFTER {self.number_of_generations} GENERATIONS, I ACHIEVED AN ANTIGENTIC FITNESS OF {generation[0].get_bloom_antigenic_fitness()} AND A REGULAR FITNESS OF {generation[0].get_bloom_fitness()}")
         print("krewl")
@@ -156,7 +158,7 @@ if __name__ == '__main__':
     original_aas = load_sequence()
     original_sequence = Sequence(original_aas)
     specific_sequence = Sequence("AAUAUUACAAACUUGUGCCCUUUUGGUGAAGUUUUUAACGCCACCAGAUUUGCAUCUGUUUAUGCUUGGAACAGGAAGAGAAUCAGCAACUGUGUUGCUGAUUAUUCUGUCCUAUAUAAUUCCGCAUCAUUUUCCACUUUUAAGUGUUAUGGAGUGUCUCCUACUAAAUUAAAUGAUCUCUGCUUUACUAAUGUCUAUGCAGAUUCAUUUGUAAUUAGAGGUGAUGAAGUCAGACAAAUCGCUCCAGGCCAAACUGGAAAGAUUGCUGAUUAUAAUUAUAAAUUACCAGAUGAUUUUACAGGCUGCGUUAUAGCUUGGAAUUCUAACAAUCUUGAUUCUAAGGUUGGUGGUAAUUAUAAUUACCUGUAUAGAUUGUUUAGGAAGUCUAAUCUCAAACCUUUUGAGAGAGAUAUUUCAACUGAAAUCUAUCAGGCCGGUAGCACACCUUGUAAUGGUGUUCAAGGUUUUAAUUGUUACUUUCCCUUACAAUCAUAUGGUUUCCAACCCACUAAUGGUGUUGGUUACCAACCAUACAGAGUAGUAGUACUUUCUUUUGAACUUCUACAUGCACCAGCAACU")
-    genetic_algorithm = Genetic_Algorithm("test", neutral, number_of_generations=3, number_of_children=3,
+    genetic_algorithm = Genetic_Algorithm("test", neutral, number_of_generations=10, number_of_children=3,
                                           interbreed_specific_sequence_prob=.7,
                                           fitness_weight=None, interbreed_specific_sequence=specific_sequence,
                                           interbreed_top_prob=.7, preserve_lowest_strategy="lowest",
