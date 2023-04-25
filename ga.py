@@ -72,7 +72,6 @@ class Genetic_Algorithm:
             self.top_strains.append(generation[0])
         print(
             f"AFTER {self.number_of_generations} GENERATIONS, I ACHIEVED AN ANTIGENTIC FITNESS OF {generation[0].get_bloom_antigenic_fitness()} AND A REGULAR FITNESS OF {generation[0].get_bloom_fitness()}")
-        print("krewl")
 
     def __run_generation__(self):
         pass
@@ -165,4 +164,3 @@ if __name__ == '__main__':
                                           strains_to_check_for=[original_sequence])
     genetic_algorithm.run_ga()
     genetic_algorithm.save_results()
-    print("krewl")
