@@ -15,7 +15,6 @@ class bloom_antigenic_calculator():
 
     def __init__(self) -> None:
         super().__init__()
-    __iterations__ = 0
     @classmethod
     def calculate_fitness(cls, sites, offset=331):
         sorted_sites = [site + offset for site in sites]
@@ -29,10 +28,6 @@ class bloom_antigenic_calculator():
             else:
                 antigenic_difference = 0
             cls.__sites_and_fitnesses__[tuple(sorted_sites)] = antigenic_difference
-            cls.__iterations__ += 1
-            if cls.__iterations__ % 1000 == 0:
-                with open("caches/bloom.pkl", "wb") as f:
-                    pkl.dump(cls.__sites_and_fitnesses__, f)
             return antigenic_difference
 
     @classmethod

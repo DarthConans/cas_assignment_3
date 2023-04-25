@@ -60,11 +60,11 @@ class Genetic_Algorithm:
 
     def run_ga(self):
         generation, strains_found_in_generation = self.generate_generation(self.initial_sequences)
-        print("DONE WITH ROUND 1")
+        #print("DONE WITH ROUND 1")
         for strain_found in strains_found_in_generation:
             self.strains_to_check_for[strain_found].append(1)
         for i in range(2, self.number_of_generations + 1):
-            print(f"DONE WITH ROUND {i}")
+            #print(f"DONE WITH ROUND {i}")
             generation, strains_found_in_generation = self.generate_generation(generation)
             self.fitnesses.append(self.generate_fitness_tuple(generation[0]))
             for strain_found in strains_found_in_generation:
