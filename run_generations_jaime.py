@@ -5,8 +5,26 @@ from multiprocessing import Pool
 from functools import partial
 
 
+def delta_fifty(run):
+    genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_0.5/delta_{run}", neut_1_antigenic_1,
+                                          number_of_children=10, interbreed_specific_sequence_prob=0.5,
+                                          antigen_weight=1.0,
+                                          interbreed_specific_sequence=Sequence(delta),
+                                          strains_to_check_for=[alpha, beta, delta, omicron])
+    genetic_algorithm.run_ga()
+    genetic_algorithm.save_results()
 
 
+def omicron_run(arg_tuple):
+    prob = arg_tuple[0]
+    run = arg_tuple[1]
+    genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{p}/omicron_{run}", neut_1_antigenic_1,
+                                          number_of_children=10, interbreed_specific_sequence_prob=prob,
+                                          antigen_weight=1.0,
+                                          interbreed_specific_sequence=specific_sequences[0],
+                                          strains_to_check_for=[alpha, beta, delta, omicron])
+    genetic_algorithm.run_ga()
+    genetic_algorithm.save_results()
 
 
 if __name__ == '__main__':
@@ -26,20 +44,13 @@ if __name__ == '__main__':
     genetic_algorithm.run_ga()
     genetic_algorithm.save_results()
 
-
-    for run in range(0, 10):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_0.5/delta_{run}", neut_1_antigenic_1,
-                                                number_of_children=10, interbreed_specific_sequence_prob=0.5, antigen_weight=1.0,
-                                                interbreed_specific_sequence=Sequence(delta), strains_to_check_for=[alpha, beta, delta, omicron])
-        genetic_algorithm.run_ga()
-        genetic_algorithm.save_results()
-
-
+    runs = [x for x in range(10)]
+    with Pool(7) as p:
+        p.map(delta_fifty, runs)
+    args = []
     for p in probabilities:
         for run in range(0, 10):
-            genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{p}/omicron_{run}", neut_1_antigenic_1,
-                                                    number_of_children=10, interbreed_specific_sequence_prob=p, antigen_weight=1.0,
-                                                    interbreed_specific_sequence=specific_sequences[0], strains_to_check_for=[alpha, beta, delta, omicron])
-            genetic_algorithm.run_ga()
-            genetic_algorithm.save_results()
+            args.append((p, run))
+    with Pool(7) as p:
+        p.map(omicron_run, args)
     print("krewl")
