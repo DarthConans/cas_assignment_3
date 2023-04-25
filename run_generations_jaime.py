@@ -10,7 +10,7 @@ def delta_fifty(run):
                                           number_of_children=10, interbreed_specific_sequence_prob=0.5,
                                           antigen_weight=1.0,
                                           interbreed_specific_sequence=Sequence(delta),
-                                          strains_to_check_for=[alpha, beta, delta, omicron])
+                                          strains_to_check_for=[alpha, beta, delta, omicron], report=True)
     genetic_algorithm.run_ga()
     genetic_algorithm.save_results()
 
@@ -22,7 +22,7 @@ def omicron_run(arg_tuple):
                                           number_of_children=10, interbreed_specific_sequence_prob=prob,
                                           antigen_weight=1.0,
                                           interbreed_specific_sequence=specific_sequences[0],
-                                          strains_to_check_for=[alpha, beta, delta, omicron])
+                                          strains_to_check_for=[alpha, beta, delta, omicron], report=True)
     genetic_algorithm.run_ga()
     genetic_algorithm.save_results()
 
@@ -40,7 +40,8 @@ if __name__ == '__main__':
 
     genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{0.1}/delta_9", neut_1_antigenic_1,
                                             number_of_children=10, interbreed_specific_sequence_prob=0.1, antigen_weight=1.0,
-                                            interbreed_specific_sequence=Sequence(delta), strains_to_check_for=[alpha, beta, delta, omicron])
+                                            interbreed_specific_sequence=Sequence(delta), strains_to_check_for=[alpha, beta, delta, omicron]
+                                          , report=True)
     genetic_algorithm.run_ga()
     genetic_algorithm.save_results()
 
