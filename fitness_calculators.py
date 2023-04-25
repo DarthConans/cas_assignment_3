@@ -52,8 +52,6 @@ class bloom_fitness:
             if not fitness_row.empty:
                 fitness = fitness_row["delta_fitness"].iloc[0]
             cls.__cache__[dict_tuple] = fitness
-            with open(cls.__cache_path__, "wb") as f:
-                pkl.dump(cls.__cache__, f)
         return fitness
 
     @classmethod
