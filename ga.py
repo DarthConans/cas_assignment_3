@@ -13,7 +13,7 @@ class Genetic_Algorithm:
     def __init__(self, out_file, initial_sequences, number_of_generations=100, top_to_preserve=100, number_of_children=100,
                  number_of_mutations=3, antigen_weight=.5, fitness_weight=None, force_mutations=True, unique=True,
                  interbreed_random_prob=None, interbreed_specific_sequence_prob=None, interbreed_specific_sequence=None,
-                 preserve_lowest_strategy=None, interbreed_top_prob=None, strains_to_check_for=None):
+                 preserve_lowest_strategy=None, interbreed_top_prob=None, strains_to_check_for=None, report=False):
         self.initial_sequences = initial_sequences
         self.number_of_generations = number_of_generations
         self.top_to_preserve = top_to_preserve
@@ -38,6 +38,7 @@ class Genetic_Algorithm:
         self.strains_to_check_for = None if strains_to_check_for is None else {strain_to_check_for: [] for strain_to_check_for in strains_to_check_for}
         self.out_file = out_file
         self.top_strains = []
+        self.report = report
 
 
     @classmethod
@@ -60,11 +61,13 @@ class Genetic_Algorithm:
 
     def run_ga(self):
         generation, strains_found_in_generation = self.generate_generation(self.initial_sequences)
-        #print("DONE WITH ROUND 1")
+        if self.report:
+            print("DONE WITH ROUND 1")
         for strain_found in strains_found_in_generation:
             self.strains_to_check_for[strain_found].append(1)
         for i in range(2, self.number_of_generations + 1):
-            #print(f"DONE WITH ROUND {i}")
+            if self.report:
+                print(f"DONE WITH ROUND {i}")
             generation, strains_found_in_generation = self.generate_generation(generation)
             self.fitnesses.append(self.generate_fitness_tuple(generation[0]))
             for strain_found in strains_found_in_generation:
