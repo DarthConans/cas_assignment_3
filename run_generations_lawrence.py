@@ -37,7 +37,8 @@ def random_prob_run(run, random_prob):
         genetic_algorithm = Genetic_Algorithm(f"{path}", neutral,
                                               number_of_generations=100,
                                               number_of_children=3, number_of_mutations=3,
-                                              interbreed_random_prob=random_prob, report=False)
+                                              interbreed_random_prob=random_prob, report=False,
+                                              number_of_interbreed_random=10)
         genetic_algorithm.run_ga()
         genetic_algorithm.save_results()
     print(f"FINISHED {run} RUN {random_prob} RANDOM PROB")
