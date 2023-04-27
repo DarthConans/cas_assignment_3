@@ -13,7 +13,8 @@ class Genetic_Algorithm:
     def __init__(self, out_file, initial_sequences, number_of_generations=100, top_to_preserve=100, number_of_children=100,
                  number_of_mutations=3, antigen_weight=.5, fitness_weight=None, force_mutations=True, unique=True,
                  interbreed_random_prob=None, interbreed_specific_sequence_prob=None, interbreed_specific_sequence=None,
-                 preserve_lowest_strategy=None, interbreed_top_prob=None, strains_to_check_for=None):
+                 preserve_lowest_strategy=None, interbreed_top_prob=None, strains_to_check_for=None, report=False,
+                 number_of_interbreed_random=3):
         self.initial_sequences = initial_sequences
         self.number_of_generations = number_of_generations
         self.top_to_preserve = top_to_preserve
@@ -38,6 +39,8 @@ class Genetic_Algorithm:
         self.strains_to_check_for = None if strains_to_check_for is None else {strain_to_check_for: [] for strain_to_check_for in strains_to_check_for}
         self.out_file = out_file
         self.top_strains = []
+        self.report = report
+        self.number_of_interbreed_random = number_of_interbreed_random
 
 
     @classmethod
@@ -56,15 +59,18 @@ class Genetic_Algorithm:
                                    self.force_mutations, self.unique, self.antigen_weight, self.fitness_weight,
                                    self.top_to_preserve, self.interbreed_random_prob,
                                    self.interbreed_specific_sequence_prob, self.interbreed_specific_sequence,
-                                   self.interbreed_top_prob, self.preserve_lowest_strategy, self.strains_to_check_for)
+                                   self.interbreed_top_prob, self.preserve_lowest_strategy, self.strains_to_check_for,
+                                   self.number_of_interbreed_random)
 
     def run_ga(self):
         generation, strains_found_in_generation = self.generate_generation(self.initial_sequences)
-        #print("DONE WITH ROUND 1")
+        if self.report:
+            print("DONE WITH ROUND 1")
         for strain_found in strains_found_in_generation:
             self.strains_to_check_for[strain_found].append(1)
         for i in range(2, self.number_of_generations + 1):
-            #print(f"DONE WITH ROUND {i}")
+            if self.report:
+                print(f"DONE WITH ROUND {i}")
             generation, strains_found_in_generation = self.generate_generation(generation)
             self.fitnesses.append(self.generate_fitness_tuple(generation[0]))
             for strain_found in strains_found_in_generation:
@@ -72,7 +78,6 @@ class Genetic_Algorithm:
             self.top_strains.append(generation[0])
         print(
             f"AFTER {self.number_of_generations} GENERATIONS, I ACHIEVED AN ANTIGENTIC FITNESS OF {generation[0].get_bloom_antigenic_fitness()} AND A REGULAR FITNESS OF {generation[0].get_bloom_fitness()}")
-        print("krewl")
 
     def __run_generation__(self):
         pass
@@ -86,7 +91,7 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
                         unique=True, antigen_weight=.5,
                         fitness_weight=None, top_to_preserve=100, interbreed_random_prob=None,
                         interbreed_specific_prob=None, interbreed_specific_sequence=None, interbreed_top_prob=None,
-                        preserve_lowest_strategy=None, strains_to_check_for=None):
+                        preserve_lowest_strategy=None, strains_to_check_for=None, number_of_interbreed_random=None):
     candidates = [parents[0]]
     for sequence in parents:
         candidates.extend(sequence.generate_mutations(number_of_children,
@@ -107,7 +112,7 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
         if should_breed:
             random_sequence = Genetic_Algorithm.generate_random_base_pairs(len(candidates[0].get_sequence()))
             to_breed_with = candidates[0]
-            child = to_breed_with.force_combine(random_sequence, number_of_mutations)
+            child = to_breed_with.force_combine(random_sequence, number_of_interbreed_random)
             candidates.append(child)
     if interbreed_specific_prob:
         should_breed = random.random() < interbreed_specific_prob
@@ -136,7 +141,7 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
     number_to_preserve = top_to_preserve if not preserve_lowest_strategy else top_to_preserve - 1
     ret = candidates[0:number_to_preserve]
     strains_found = []
-    if strains_to_check_for:
+    if  :
         for strain_to_check_for in strains_to_check_for.keys():
             if strain_to_check_for in candidates:
                 strains_found.append(strain_to_check_for)
@@ -165,4 +170,3 @@ if __name__ == '__main__':
                                           strains_to_check_for=[original_sequence])
     genetic_algorithm.run_ga()
     genetic_algorithm.save_results()
-    print("krewl")
