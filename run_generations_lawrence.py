@@ -37,7 +37,8 @@ def random_prob_run(run, random_prob):
         genetic_algorithm = Genetic_Algorithm(f"{path}", neutral,
                                               number_of_generations=100,
                                               number_of_children=3, number_of_mutations=3,
-                                              interbreed_random_prob=random_prob, report=False)
+                                              interbreed_random_prob=random_prob, report=False,
+                                              number_of_interbreed_random=10)
         genetic_algorithm.run_ga()
         genetic_algorithm.save_results()
     print(f"FINISHED {run} RUN {random_prob} RANDOM PROB")
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     #original_aas = load_sequence()
 
     neutral = get_one_hop()
-    num_mutations_list = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    num_mutations_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     for num_mutations in num_mutations_list:
         if not os.path.exists(f"results/Lawrence/mutations/{num_mutations}/"):
             os.makedirs(f"results/Lawrence/mutations/{num_mutations}/")
