@@ -50,7 +50,7 @@ if __name__ == '__main__':
     #original_aas = load_sequence()
 
     neutral = get_one_hop()
-    num_mutations_list = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    num_mutations_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     for num_mutations in num_mutations_list:
         if not os.path.exists(f"results/Lawrence/mutations/{num_mutations}/"):
             os.makedirs(f"results/Lawrence/mutations/{num_mutations}/")
