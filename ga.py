@@ -141,7 +141,7 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
     number_to_preserve = top_to_preserve if not preserve_lowest_strategy else top_to_preserve - 1
     ret = candidates[0:number_to_preserve]
     strains_found = []
-    if  :
+    if strains_to_check_for:
         for strain_to_check_for in strains_to_check_for.keys():
             if strain_to_check_for in candidates:
                 strains_found.append(strain_to_check_for)
