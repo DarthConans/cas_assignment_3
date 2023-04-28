@@ -93,7 +93,7 @@ def no_mix_antigenic_neutral(run):
 if __name__ == '__main__':
     probabilities = [0.01, 0.1, 0.5]
 
-    runs = [x for x in range(10, 30)]
+    runs = [x for x in range(0, 10)]
     # alpha
     args0 = []
     for p in probabilities:
