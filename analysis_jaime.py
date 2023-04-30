@@ -40,8 +40,9 @@ def plot_fitness_escape_over_time(name, prob, fit_low, fit_high, fit_avg, esc_lo
     fig = plt.figure(figsize=(8, 6))
     fit_plot = fig.add_subplot(2, 1, 1)
     esc_plot = fig.add_subplot(2, 1, 2)
-    fit_plot.set_title(f"Interbreed with {name} at {int(float(prob)*100)}% \nSpike Protein Fitness Over Time")
-    esc_plot.set_title(f"Antigenic Escape Over Time")
+    fig.suptitle(f"Interbreed with {name} at {int(float(prob)*100)}%")
+    fit_plot.set_title("Spike Protein Fitness Over Time")
+    esc_plot.set_title("Antigenic Escape Over Time")
 
     xs = range(len(fit_avg))
 
