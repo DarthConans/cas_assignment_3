@@ -7,7 +7,7 @@ def get_avg_low_high(name, prob):
     escapes = []
     fitnesses = []
     for i in range(10):
-        ga = pd.read_pickle(f"results/Jaime_new/prob_{prob}/{name}_{i}.pkl")
+        ga = pd.read_pickle(f"results/Jaime_lawrence/prob_{prob}/{name}_{i}.pkl")
         escapes.append([x[0] for x in ga.fitnesses])
         fitnesses.append([x[1] for x in ga.fitnesses])
 
@@ -63,7 +63,7 @@ def plot_fitness_escape_over_time(name, prob, fit_low, fit_high, fit_avg, esc_lo
 def get_mutations(name, prob):
     sites = [0]*200
     for i in range(10):
-        ga = pd.read_pickle(f"results/Jaime_new/prob_{prob}/{name}_{i}.pkl")
+        ga = pd.read_pickle(f"results/Jaime_lawrence/prob_{prob}/{name}_{i}.pkl")
         for j in ga.top_strains[-1].get_non_neutral():
             sites[j["site"]] = sites[j["site"]] + 1
     return [x / 10 for x in sites]
