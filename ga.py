@@ -124,7 +124,7 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
     if fitness_weight is None:
         cand_fitnesses = sorted(candidates, key=lambda x: x.get_bloom_fitness(), reverse=True)
         max_fitness = cand_fitnesses[0].get_bloom_fitness()
-        fitness_weight = 1 / max_fitness
+        fitness_weight = 1 / max_fitness if max_fitness is not 0 else 1
     candidates = sorted(candidates, key=lambda x: x.generate_fitness_score_non_neutral(antigen_weight,
                                                                                        fitness_weight),
                         reverse=True)
