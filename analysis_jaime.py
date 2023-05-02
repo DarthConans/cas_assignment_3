@@ -80,14 +80,14 @@ def plot_mutation_per_site(name, prob, mut_avg, orig):
     fig = plt.figure(figsize=(12, 6))
     fig.suptitle(f"Interbreed with {name.capitalize()} at {int(float(prob)*100)}%")
     mut_plot = fig.add_subplot(1, 1, 1)
-    mut_plot.set_title("Probability of Mutations per Site in RBD for 10 runs")
+    mut_plot.set_title("Probability of Non-Neutral Mutations per Site in RBD for 10 runs")
 
     xs = range(331, 531)
 
     mut_plot.set_xlabel("site")
     mut_plot.set_xticks(range(xs[0], xs[-1]+10, 50))
 
-    mut_plot.set_ylabel("Probality of Mutation")
+    mut_plot.set_ylabel("Probability of Non-Neutral Mutation")
     mut_plot.bar(xs, mut_avg, color="teal", alpha=0.8, label="average ga top result")
     mut_plot.bar(xs, orig, color="blue", alpha=0.4, label=name.capitalize())
 
