@@ -12,7 +12,7 @@ from functools import partial
 def mutation_run(run, num_mutations):
     if not os.path.exists(f"results/Lawrence/mutations/{num_mutations}/{run}.pkl"):
         genetic_algorithm = Genetic_Algorithm(f"results/Lawrence/mutations/{num_mutations}/{run}", neutral,
-                                              number_of_generations=100, number_of_children=3,
+                                              number_of_generations=100, number_of_children=3, antigen_weight=1,
                                               number_of_mutations=num_mutations, report=False)
         genetic_algorithm.run_ga()
         genetic_algorithm.save_results()
@@ -23,8 +23,8 @@ def top_prob_run(run, top_prob):
     path = f"results/Lawrence/interbreed_top/{str(top_prob).replace('.','_')}/{run}"
     if not os.path.exists(f"{path}.pkl"):
         genetic_algorithm = Genetic_Algorithm(f"{path}", neutral,
-                                              number_of_generations=100,
-                                              number_of_children=3, number_of_mutations=3,
+                                              number_of_generations=100, antigen_weight=1,
+                                              number_of_children=3, number_of_mutations=1,
                                               interbreed_top_prob=top_prob, report=False)
         genetic_algorithm.run_ga()
         genetic_algorithm.save_results()
@@ -35,8 +35,8 @@ def random_prob_run(run, random_prob):
     path = f"results/Lawrence/interbreed_random/{str(random_prob).replace('.','_')}/{run}"
     if not os.path.exists(f"{path}.pkl"):
         genetic_algorithm = Genetic_Algorithm(f"{path}", neutral,
-                                              number_of_generations=100,
-                                              number_of_children=3, number_of_mutations=3,
+                                              number_of_generations=100, antigen_weight=1,
+                                              number_of_children=3, number_of_mutations=1,
                                               interbreed_random_prob=random_prob, report=False,
                                               number_of_interbreed_random=10)
         genetic_algorithm.run_ga()

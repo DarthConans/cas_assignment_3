@@ -82,7 +82,7 @@ EQUIVALENT_SEQUENCES = [
     ({"UUA", "UUG", "CUU", "CUC", "CUA", "CUG"}, "L"),
     ({"UCU", "UCC", "UCA", "UCG", "AGU", "AGC"}, "S"),
     ({"UAU", "UAC"}, "Y"),
-    ({"UAA", "UAG", "UGA"}, "X"),
+    ({"UAA", "UAG", "UGA"}, "*"),
     ({"UGU", "UGC"}, "C"),
     ({"UGG"}, "W"),
     ({"CCU", "CCC", "CCA", "CCG"}, "P"),

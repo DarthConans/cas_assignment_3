@@ -167,6 +167,9 @@ class Sequence:
             new_chars[site_to_swap] = other_chars[site_to_swap]
         return Sequence(''.join(new_chars), self.__base_sequence__, self.__original_amino_acids__)
 
+    def contains_stop(self):
+        return "X" in self.__amino_acids__ or "*" in self.__amino_acids__
+
 
 def load_old_pickle(file_name, original_sequence=load_sequence()):
     with open(file_name, "rb") as f:
@@ -210,4 +213,6 @@ if __name__ == '__main__':
     t10 = t4.get_bloom_fitness()
     t11 = Sequence("UACUGG", "AAUUUG")
     t12 = t11.get_bloom_fitness()
+    t13 = Sequence("UAAUAA", "AAAAAA")
+    t14 = t13.contains_stop()
     print("whatever")
