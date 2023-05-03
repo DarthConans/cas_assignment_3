@@ -19,8 +19,8 @@ specific_sequences=[alpha, beta, delta, omicron]
 def alpha_run(arg_tuple):
     prob = arg_tuple[0]
     run = arg_tuple[1]
-    if not os.path.exists(f"results/Jaime_new/prob_{prob}/alpha_{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime_new/prob_{prob}/alpha_{run}", neut_1_antigenic_1,
+    if not os.path.exists(f"results/Jaime/prob_{prob}/alpha_{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{prob}/alpha_{run}", neut_1_antigenic_1,
                                             number_of_children=10,
                                             antigen_weight=1.0,
                                             interbreed_specific_sequence=specific_sequences[0],
@@ -32,8 +32,8 @@ def alpha_run(arg_tuple):
 def beta_run(arg_tuple):
     prob = arg_tuple[0]
     run = arg_tuple[1]
-    if not os.path.exists(f"results/Jaime_new/prob_{prob}/beta_{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime_new/prob_{prob}/beta_{run}", neut_1_antigenic_1,
+    if not os.path.exists(f"results/Jaime/prob_{prob}/beta_{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{prob}/beta_{run}", neut_1_antigenic_1,
                                             number_of_children=10,
                                             antigen_weight=1.0,
                                             interbreed_specific_sequence=specific_sequences[1],
@@ -45,8 +45,8 @@ def beta_run(arg_tuple):
 def delta_run(arg_tuple):
     prob = arg_tuple[0]
     run = arg_tuple[1]
-    if not os.path.exists(f"results/Jaime_new/prob_{prob}/delta_{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime_new/prob_{prob}/delta_{run}", neut_1_antigenic_1,
+    if not os.path.exists(f"results/Jaime/prob_{prob}/delta_{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{prob}/delta_{run}", neut_1_antigenic_1,
                                             number_of_children=10,
                                             antigen_weight=1.0,
                                             interbreed_specific_sequence=specific_sequences[2],
@@ -59,8 +59,8 @@ def delta_run(arg_tuple):
 def omicron_run(arg_tuple):
     prob = arg_tuple[0]
     run = arg_tuple[1]
-    if not os.path.exists(f"results/Jaime_new/prob_{prob}/omicron_{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime_new/prob_{prob}/omicron_{run}",
+    if not os.path.exists(f"results/Jaime/prob_{prob}/omicron_{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_{prob}/omicron_{run}",
                                                 neut_1_antigenic_1,
                                                 number_of_children=10,
                                                 antigen_weight=1.0,
@@ -71,8 +71,8 @@ def omicron_run(arg_tuple):
         genetic_algorithm.save_results()
 
 def no_mix_neutral(run):
-    if not os.path.exists(f"results/Jaime_new/prob_0/neutral_{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime_new/prob_0/neutral_{run}",
+    if not os.path.exists(f"results/Jaime/prob_0/neutral_{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_0/neutral_{run}",
                                                 neutral,
                                                 number_of_children=10,
                                                 antigen_weight=1.0,
@@ -81,8 +81,8 @@ def no_mix_neutral(run):
         genetic_algorithm.save_results()
 
 def no_mix_antigenic_neutral(run):
-    if not os.path.exists(f"results/Jaime_new/prob_0/antigenic_neutral_{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Jaime_new/prob_0/antigenic_neutral_{run}",
+    if not os.path.exists(f"results/Jaime/prob_0/antigenic_neutral_{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Jaime/prob_0/antigenic_neutral_{run}",
                                                 antigenic_neutral,
                                                 number_of_children=10,
                                                 antigen_weight=1.0,

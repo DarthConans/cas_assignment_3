@@ -7,7 +7,7 @@ def get_avg_low_high(name, prob):
     escapes = []
     fitnesses = []
     for i in range(10):
-        ga = pd.read_pickle(f"results/Jaime_lawrence/prob_{prob}/{name}_{i}.pkl")
+        ga = pd.read_pickle(f"results/Jaime/prob_{prob}/{name}_{i}.pkl")
         escapes.append([x[0] for x in ga.fitnesses])
         fitnesses.append([x[1] for x in ga.fitnesses])
 
@@ -63,7 +63,7 @@ def plot_fitness_escape_over_time(name, prob, fit_low, fit_high, fit_avg, esc_lo
 def get_mutations(name, prob):
     sites = [0]*200
     for i in range(10):
-        ga = pd.read_pickle(f"results/Jaime_lawrence/prob_{prob}/{name}_{i}.pkl")
+        ga = pd.read_pickle(f"results/Jaime/prob_{prob}/{name}_{i}.pkl")
         for j in ga.top_strains[-1].get_non_neutral():
             sites[j["site"]] = sites[j["site"]] + 1
     return [x / 10 for x in sites]
@@ -80,14 +80,14 @@ def plot_mutation_per_site(name, prob, mut_avg, orig):
     fig = plt.figure(figsize=(12, 6))
     fig.suptitle(f"Interbreed with {name.capitalize()} at {int(float(prob)*100)}%")
     mut_plot = fig.add_subplot(1, 1, 1)
-    mut_plot.set_title("Probability of Mutations per Site in RBD for 10 runs")
+    mut_plot.set_title("Probability of Non-Neutral Mutations per Site in RBD for 10 runs")
 
     xs = range(331, 531)
 
     mut_plot.set_xlabel("site")
     mut_plot.set_xticks(range(xs[0], xs[-1]+10, 50))
 
-    mut_plot.set_ylabel("Probality of Mutation")
+    mut_plot.set_ylabel("Probability of Non-Neutral Mutation")
     mut_plot.bar(xs, mut_avg, color="teal", alpha=0.8, label="average ga top result")
     mut_plot.bar(xs, orig, color="blue", alpha=0.4, label=name.capitalize())
 
