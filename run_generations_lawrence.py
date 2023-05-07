@@ -8,15 +8,25 @@ from numpy import arange
 from multiprocessing import Pool
 from functools import partial
 
-def antigen_weight_run(run):
+def antigen_weight_run(run, starting_pop):
     if not os.path.exists(f"results/Lawrence/antigen/{run}.pkl"):
-        genetic_algorithm = Genetic_Algorithm(f"results/Lawrence/antigen/{run}", neutral,
+        genetic_algorithm = Genetic_Algorithm(f"results/Lawrence/antigen/{run}", starting_pop,
                                               number_of_generations=100, number_of_children=3, antigen_weight=1,
                                               fitness_weight=0,
                                               number_of_mutations=1, report=False)
         genetic_algorithm.run_ga()
         genetic_algorithm.save_results()
     print(f"FINISHED ANTIGEN RUN {run}")
+
+def fitness_weight_run(run, starting_pop):
+    if not os.path.exists(f"results/Lawrence/fitness/{run}.pkl"):
+        genetic_algorithm = Genetic_Algorithm(f"results/Lawrence/fitness/{run}", starting_pop,
+                                              number_of_generations=100, number_of_children=3, antigen_weight=0,
+                                              fitness_weight=1,
+                                              number_of_mutations=1, report=False)
+        genetic_algorithm.run_ga()
+        genetic_algorithm.save_results()
+    print(f"FINISHED FITNESS RUN {run}")
 def mutation_run(run, num_mutations):
     if not os.path.exists(f"results/Lawrence/mutations/{num_mutations}/{run}.pkl"):
         genetic_algorithm = Genetic_Algorithm(f"results/Lawrence/mutations/{num_mutations}/{run}", neutral,
@@ -59,7 +69,11 @@ if __name__ == '__main__':
 
     neutral = get_one_hop()
     args = [x for x in range(100)]
-    with Pool(19) as p:
+    with Pool(10) as p:
+        f = partial(fitness_weight_run, starting_pop=neutral)
+        p.map(f, args)
+    with Pool(10) as p:
+        f = partial(antigen_weight_run, starting_pop=neutral)
         p.map(antigen_weight_run, args)
     num_mutations_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 

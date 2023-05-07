@@ -14,7 +14,7 @@ class Genetic_Algorithm:
                  number_of_mutations=3, antigen_weight=.5, fitness_weight=None, force_mutations=True, unique=True,
                  interbreed_random_prob=None, interbreed_specific_sequence_prob=None, interbreed_specific_sequence=None,
                  preserve_lowest_strategy=None, interbreed_top_prob=None, strains_to_check_for=None, report=False,
-                 number_of_interbreed_random=3):
+                 number_of_interbreed_random=3, exclude_stop=True):
         self.initial_sequences = initial_sequences
         self.number_of_generations = number_of_generations
         self.top_to_preserve = top_to_preserve
@@ -41,6 +41,7 @@ class Genetic_Algorithm:
         self.top_strains = []
         self.report = report
         self.number_of_interbreed_random = number_of_interbreed_random
+        self.exclude_stop = exclude_stop
 
 
     @classmethod
@@ -60,7 +61,7 @@ class Genetic_Algorithm:
                                    self.top_to_preserve, self.interbreed_random_prob,
                                    self.interbreed_specific_sequence_prob, self.interbreed_specific_sequence,
                                    self.interbreed_top_prob, self.preserve_lowest_strategy, self.strains_to_check_for,
-                                   self.number_of_interbreed_random)
+                                   self.number_of_interbreed_random, self.exclude_stop)
 
     def run_ga(self):
         generation, strains_found_in_generation = self.generate_generation(self.initial_sequences)
@@ -91,19 +92,32 @@ def generate_generation(parents, number_of_children=100, number_of_mutations=3, 
                         unique=True, antigen_weight=.5,
                         fitness_weight=None, top_to_preserve=100, interbreed_random_prob=None,
                         interbreed_specific_prob=None, interbreed_specific_sequence=None, interbreed_top_prob=None,
-                        preserve_lowest_strategy=None, strains_to_check_for=None, number_of_interbreed_random=None):
+                        preserve_lowest_strategy=None, strains_to_check_for=None, number_of_interbreed_random=None,
+                        exclude_stop=False):
     candidates = [parents[0]]
     for sequence in parents:
-        candidates.extend(sequence.generate_mutations(number_of_children,
+        if exclude_stop:
+            candidates.extend([x for x in sequence.generate_mutations(number_of_children,
+                                                                      num_mutations=number_of_mutations,
+                                                                      force_mutations=force_mutations, unique=unique)
+                               if not x.contains_stop()])
+        else:
+            candidates.extend(sequence.generate_mutations(number_of_children,
                                                       num_mutations=number_of_mutations,
                                                       force_mutations=force_mutations, unique=unique))
     if unique:
         candidates = set(candidates)
         while len(candidates) < top_to_preserve:
             for sequence in parents:
-                candidates.update(sequence.generate_mutations(number_of_children,
-                                                              num_mutations=number_of_mutations,
-                                                              force_mutations=force_mutations, unique=unique))
+                if exclude_stop:
+                    candidates.update([x for x in sequence.generate_mutations(number_of_children,
+                                                                  num_mutations=number_of_mutations,
+                                                                  force_mutations=force_mutations, unique=unique)
+                                       if not x.contains_stop()])
+                else:
+                    candidates.update(sequence.generate_mutations(number_of_children,
+                                                                  num_mutations=number_of_mutations,
+                                                                  force_mutations=force_mutations, unique=unique))
                 if len(candidates) >= top_to_preserve:
                     break
         candidates = list(candidates)
