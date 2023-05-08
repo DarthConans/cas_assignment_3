@@ -69,12 +69,13 @@ if __name__ == '__main__':
 
     neutral = get_one_hop()
     args = [x for x in range(100)]
-    with Pool(10) as p:
+
+    with Pool(19) as p:
         f = partial(fitness_weight_run, starting_pop=neutral)
         p.map(f, args)
-    with Pool(10) as p:
+    with Pool(19) as p:
         f = partial(antigen_weight_run, starting_pop=neutral)
-        p.map(antigen_weight_run, args)
+        p.map(f, args)
     num_mutations_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
     
