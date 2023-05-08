@@ -18,7 +18,7 @@ def get_avg_low_high_top_fitness(muts):
         f_low = 1000
         f_high = 0
         for i in range(100):
-            ga = pd.read_pickle(f"results/Lawrence/mutations/{m}/{i}.pkl")
+            ga = pd.read_pickle(f"results/Lawrence/antigen/{i}.pkl")
             esc = ga.fitnesses[-1][0]
             fit = ga.fitnesses[-1][1]
             e_avg = e_avg + esc
@@ -78,8 +78,10 @@ def plot_fitness_escape_over_mutations(xs, fit_low, fit_high, fit_avg, esc_low, 
 
 
 # main
-muts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+#muts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+muts = [0]
 fit_low, fit_high, fit_avg, esc_low, esc_high, esc_avg = get_avg_low_high_top_fitness(muts)
-plot_fitness_escape_over_mutations(muts, fit_low, fit_high, fit_avg, esc_low, esc_high, esc_avg)
+print(fit_avg, esc_avg)
+#plot_fitness_escape_over_mutations(muts, fit_low, fit_high, fit_avg, esc_low, esc_high, esc_avg)
 
 print("whatever")
